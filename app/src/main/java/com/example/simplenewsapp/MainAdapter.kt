@@ -78,7 +78,7 @@ object Validity {
 
     fun checkAuthor(auth:String?):String {
         if (auth == null) {
-            return "Unknown, "
+            return "Unknown Author, "
         } else {
             return auth + ", "
         }
@@ -88,7 +88,7 @@ object Validity {
         if(string == null) {
             return "No Data for this news."
         } else {
-            return string
+            return string.substring(0,260)
         }
     }
 }

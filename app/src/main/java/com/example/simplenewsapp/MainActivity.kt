@@ -3,6 +3,7 @@ package com.example.simplenewsapp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.transition.TransitionInflater
 import com.example.simplenewsapp.Model.ApiData
 import com.example.simplenewsapp.Model.NewsDBApi
 import com.google.gson.Gson
@@ -14,17 +15,31 @@ import okhttp3.Response
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var adapter:MainAdapter
+    private val data = ApiData()
     private val client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setTitle("News App")
-
         connect()
+
         rc_main.layoutManager = LinearLayoutManager(this)
+        adapter = MainAdapter(data)
+
+        swipeLayout.setOnRefreshListener {
+            connect()
+            adapter.notifyDataSetChanged()
+            swipeLayout.isRefreshing = false
+        }
+
+        setupWindowAnimations()
+    }
+
+    private fun setupWindowAnimations() {
+        val slide = TransitionInflater.from(this).inflateTransition(R.transition.activity_slide)
+        window.exitTransition = slide
     }
 
     fun connect() {

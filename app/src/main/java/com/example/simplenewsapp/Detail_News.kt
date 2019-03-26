@@ -24,6 +24,14 @@ class Detail_News : AppCompatActivity() {
         newsAuthor.text = Validity.checkAuthor(intent.getStringExtra(MainViewHolder.AUTHOR_KEY))
         newsDate.text = Validity.setDate(intent.getStringExtra(MainViewHolder.DATE_KEY))
         newsContent.text = Validity.checkContent(intent.getStringExtra(MainViewHolder.CONTENT_KEY))
+        readMore.text = "Read More"
+        readMore.setOnClickListener {
+            openWeb()
+        }
+
+        floatingBtowser.setOnClickListener {
+            openWeb()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -33,14 +41,18 @@ class Detail_News : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val url = intent.getStringExtra(MainViewHolder.WEB_KEY)
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        this.startActivity(intent)
+        openWeb()
         return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
+    }
+
+    fun openWeb() {
+        val url = intent.getStringExtra(MainViewHolder.WEB_KEY)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        this.startActivity(intent)
     }
 }

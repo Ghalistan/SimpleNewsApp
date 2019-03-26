@@ -41,7 +41,11 @@ class Detail_News : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        openWeb()
+        when(item?.itemId) {
+            R.id.menu -> { openWeb() }
+            16908332 -> { finish() }
+            else -> super.onOptionsItemSelected(item)
+        }
         return true
     }
 

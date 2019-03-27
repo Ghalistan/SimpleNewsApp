@@ -78,7 +78,7 @@ object Validity {
     }
 
     fun checkAuthor(auth:String?):String {
-        if (auth == null) {
+        if (auth == null || auth == "") {
             return "Unknown Author, "
         } else {
             return auth + ", "

@@ -16,7 +16,7 @@ class Detail_News : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail__news)
 
-        supportActionBar?.title = null
+        supportActionBar?.title = "Detail News"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Picasso.get().load(intent.getStringExtra(MainViewHolder.IMG_KEY)).into(newsPict)

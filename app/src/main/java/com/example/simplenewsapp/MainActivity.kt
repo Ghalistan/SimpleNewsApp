@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.transition.TransitionInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.example.simplenewsapp.Model.ApiData
 import com.example.simplenewsapp.Model.NewsDBApi
 import com.google.gson.Gson
@@ -23,17 +27,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setTitle("News App")
-        connect()
 
         rc_main.layoutManager = LinearLayoutManager(this)
         adapter = MainAdapter(data)
 
         swipeLayout.setOnRefreshListener {
-            connect()
+            connect(spinner.selectedItem.toString(), spinner2.selectedItem.toString())
             adapter.notifyDataSetChanged()
             swipeLayout.isRefreshing = false
         }
 
+        val spinner : Spinner = findViewById(R.id.spinner)
+        ArrayAdapter.createFromResource(this, R.array.country_array, android.R.layout.simple_spinner_item). also {
+                adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                connect(spinner.selectedItem.toString(), spinner2.selectedItem.toString())
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        val spinner2 : Spinner = findViewById(R.id.spinner2)
+        ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item). also {
+                adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner2.adapter = adapter
+        }
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                connect(spinner.selectedItem.toString(), spinner2.selectedItem.toString())
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        connect("us", "general")
         setupWindowAnimations()
     }
 
@@ -42,8 +76,8 @@ class MainActivity : AppCompatActivity() {
         window.exitTransition = slide
     }
 
-    fun connect() {
-        val request = NewsDBApi().getNews()
+    fun connect(country:String, category:String) {
+        val request = NewsDBApi().getNews(country, category)
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) { }

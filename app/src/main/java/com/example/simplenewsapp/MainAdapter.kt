@@ -87,8 +87,10 @@ object Validity {
     fun checkContent(string:String?):String {
         if(string == null) {
             return "No Data for this news."
+        } else if(string.length < 260) {
+            return string
         } else {
-            return string.substring(0,260)
+            return string.substring(0, 260)
         }
     }
 }

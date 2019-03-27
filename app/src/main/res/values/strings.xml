@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">SimpleNewsApp</string>
+
+    <string-array name="country_array">
+        <item>us</item>
+        <item>id</item>
+        <item>sg</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>general</item>
+        <item>health</item>
+        <item>science</item>
+        <item>sports</item>
+        <item>technology</item>
+    </string-array>
 </resources>

@@ -19,12 +19,12 @@ class Detail_News : AppCompatActivity() {
         supportActionBar?.title = "Detail News"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        Picasso.get().load(intent.getStringExtra(MainViewHolder.IMG_KEY)).into(newsPict)
+        val image = Validity.checkImage(intent.getStringExtra(MainViewHolder.IMG_KEY))
+        Picasso.get().load(image).into(newsPict)
         newsTitle.text = intent.getStringExtra(MainViewHolder.TITLE_KEY)
         newsAuthor.text = Validity.checkAuthor(intent.getStringExtra(MainViewHolder.AUTHOR_KEY))
         newsDate.text = Validity.setDate(intent.getStringExtra(MainViewHolder.DATE_KEY))
         newsContent.text = Validity.checkContent(intent.getStringExtra(MainViewHolder.CONTENT_KEY))
-        readMore.text = "Read More"
         readMore.setOnClickListener {
             openWeb()
         }

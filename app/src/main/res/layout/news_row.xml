@@ -52,8 +52,16 @@
                         android:id="@+id/newsDate"
                         android:textSize="12sp"/>
                 <TextView
-                        android:text="DESCRIPTION"
+                        android:text=""
                         android:layout_below="@id/newsDate"
+                        android:background="@android:color/darker_gray"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_height="1dp" android:id="@+id/longbar"/>
+                <TextView
+                        android:text="DESCRIPTION"
+                        android:layout_below="@id/longbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/newsDesc"/>

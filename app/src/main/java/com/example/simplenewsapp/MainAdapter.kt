@@ -27,7 +27,8 @@ class MainAdapter(data:ApiData) : RecyclerView.Adapter<MainViewHolder>() {
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         // Thumbnail
         val NewsImage = holder.view.newsImage
-        Picasso.get().load(newsData.articles.get(position).urlToImage).into(NewsImage)
+        val image = Validity.checkImage(newsData.articles.get(position).urlToImage)
+        Picasso.get().load(image).into(NewsImage)
 
         //Title
         holder.view.title_row.text = newsData.articles.get(position).title
@@ -39,7 +40,7 @@ class MainAdapter(data:ApiData) : RecyclerView.Adapter<MainViewHolder>() {
         holder.view.newsDate.text = Validity.setDate(newsData.articles.get(position).publishedAt)
 
         //Description
-        holder.view.newsDesc.text = newsData.articles.get(position).description
+        holder.view.newsDesc.text = Validity.checkDesc(newsData.articles.get(position).description)
 
         //Pass data to Activity
         holder.detail = newsData.articles.get(position)
@@ -91,6 +92,22 @@ object Validity {
             return string
         } else {
             return string.substring(0, 260)
+        }
+    }
+
+    fun checkDesc(string:String?):String {
+        if (string==null) {
+            return "No Description for this news."
+        } else {
+            return string
+        }
+    }
+
+    fun checkImage(string: String?):String {
+        if (string==null) {
+            return "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+        } else {
+            return string
         }
     }
 }
